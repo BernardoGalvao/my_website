@@ -1,7 +1,7 @@
 # Site settings
 baseURL = "https://bernardogalvao.netlify.app/"
 languageCode = "en-us"
-title = "Forty"
+title = "Portfolio website for Bernardo Galvão"
 theme = "forty"
 
 # Enter your tracking code to enable Google Analytics
@@ -172,7 +172,7 @@ disqusShortname = ""
     # by copying the corresponding map with frontmatter code.
     [[params.contact.email]]
     title = "Email"
-    email = "example@domain.com"
+    email = "bernardod.mfa2021@london.edu"
 
     [[params.contact.phone]]
     title = "Phone"
@@ -180,9 +180,9 @@ disqusShortname = ""
 
     [[params.contact.address]]
     title = "Address"
-    street = "Street"
-    city = "City, ST 00000"
-    country = "Country"
+    street = "Regent's Park"
+    city = "London, NW1 4SA"
+    country = "United Kingdom"
 
   # Footer section
   [params.footer]
@@ -202,7 +202,7 @@ disqusShortname = ""
 
     [[params.footer.social]]
       icon = "fa-instagram"
-      url= "https://www.instagram.com"
+      url= "https://www.instagram.com/galvaobe"
       label = "Instagram"
     
     [[params.footer.social]]
@@ -212,7 +212,7 @@ disqusShortname = ""
 
     [[params.footer.social]]
       icon = "fa-linkedin"
-      url= "https://www.linkedin.com"
+      url= "https://www.linkedin.com/in/bernardo-galvao/"
       label = "LinkedIn"
 
     [[params.footer.quicklinks]]
