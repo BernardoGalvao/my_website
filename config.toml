@@ -81,7 +81,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Donald Trump's Approval"
       subtitle = "Has COVID-19 affected Trump's approval?m"
-      image = "pic04.jpg"
+      image = "pic40.jpg"
       url = "blogs/blog4"
 
     # You can make more showcases by copy and pasting the code above
