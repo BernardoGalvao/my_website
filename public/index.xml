@@ -28,11 +28,12 @@
     
     <item>
       <title>Magna</title>
-      <link>/blogs/magna/</link>
+      <link>/blogs/blog2/</link>
       <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
       
-      <guid>/blogs/magna/</guid>
-      <description></description>
+      <guid>/blogs/blog2/</guid>
+      <description>As discussed in class, I would like you to reproduce the plot that shows the top ten cities in highest amounts raised in political contributions in California during the 2016 US Presidential election. To get this plot, you must join two dataframes; the one you have with all contributions, and data that can translate zipcodes to cities.
+CA_contributors_2016 &amp;lt;- vroom::vroom(here::here(&amp;quot;data&amp;quot;,&amp;quot;CA_contributors_2016.csv&amp;quot;))Zip_codes &amp;lt;- vroom::vroom(here::here(&amp;quot;data&amp;quot;,&amp;quot;zip_code_database.csv&amp;quot;))Zip_codes_clean &amp;lt;- filter(Zip_codes, state == &amp;quot;CA&amp;quot;)Cali_contributors &amp;lt;- CA_contributors_2016 %&amp;gt;%filter(cand_nm %in% c(&amp;quot;Clinton, Hillary Rodham&amp;quot;,&amp;quot;Trump, Donald J.</description>
     </item>
     
     <item>

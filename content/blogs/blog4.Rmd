@@ -77,7 +77,7 @@ Approval_plot <- ggplot(approval_polllist_AvgNetAp, aes(x=week,y=Mean, color = a
   facet_wrap(~year) + 
   geom_point(size = 1) + 
   geom_hline(yintercept=0, color = "gold")+
-    labs(title = "Trump's net approval consistently negative", y = "Avg Net Approval (%)", x = "Week") + 
+  labs(title = "Trump's net approval consistently negative", y = "Avg Net Approval (%)", x = "Week") + 
   theme_bw() +
   geom_ribbon(aes(ymin=lower, ymax=upper), linetype=1, alpha=0.1)+
   theme(legend.position="none")+

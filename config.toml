@@ -67,10 +67,10 @@ disqusShortname = ""
       url = "blogs/blog1"
 
     [[params.tiles.showcase]]
-      title = "Tempus"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic02.jpg"
-      url = "blogs/tempus"
+      title = "2016 California Contributors plots"
+      subtitle = "Top 10 cities in highest amounts raised in political contributions in California during the 2016 US Presidential election."
+      image = "Dollar.jpg"
+      url = "blogs/blog2"
 
     [[params.tiles.showcase]]
       title = "Magna"
@@ -80,7 +80,7 @@ disqusShortname = ""
 
     [[params.tiles.showcase]]
       title = "Donald Trump's Approval"
-      subtitle = "Has COVID-19 affected Trump's approval?m"
+      subtitle = "Has COVID-19 affected Trump's approval?"
       image = "pic40.jpg"
       url = "blogs/blog4"
 
