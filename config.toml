@@ -51,8 +51,8 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi, my name is Bernardo Galvão"
-    subtitle = "This is my portfolio website."
-    buttonText = "Get Started"
+    subtitle = "THIS MY PORTFOLIO WEBSITE."
+    buttonText = "FIND OUT MORE ABOUT WHAT I HAVE DONE"
 
 
   # Tiles Section
@@ -61,8 +61,8 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Aliquam"
-      subtitle = "Ipsum Dolor Sit Amet"
+      title = "Yield Curve inversion"
+      subtitle = "What is the relation between Yield Curve and Recession at the USA"
       image = "pic01.jpg"
       url = "blogs/aliquam"
 
