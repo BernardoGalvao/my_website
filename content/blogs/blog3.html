@@ -1,0 +1,52 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:26:13-05:00"
+description: Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.
+draft: false
+image: pic08.jpg
+keywords: ""
+slug: blog3
+title: Tempus
+---
+
+
+
+<p>Recall the TfL data on how many bikes were hired every single day. We can get the latest data by running the following</p>
+<pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
+
+# Download TFL data to temporary file
+httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
+<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2020-09-18T09%3A06%3A54/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20201006%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20201006T234553Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=e43e4abe40a7c29e1674710c908d0510f0d41e7676cae72bc9c48424835d649b&amp;X-Amz-SignedHeaders=host]
+##   Date: 2020-10-06 23:49
+##   Status: 200
+##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+##   Size: 165 kB
+## &lt;ON DISK&gt;  C:\Users\berna\AppData\Local\Temp\RtmpQbHKu3\file3b6c186977c9.xlsx</code></pre>
+<pre class="r"><code># Use read_excel to read it as dataframe
+bike0 &lt;- read_excel(bike.temp,
+                   sheet = &quot;Data&quot;,
+                   range = cell_cols(&quot;A:B&quot;))
+
+# change dates to get year, month, and week
+bike &lt;- bike0 %&gt;% 
+  clean_names() %&gt;% 
+  rename (bikes_hired = number_of_bicycle_hires) %&gt;% 
+  mutate (year = year(day),
+          month = lubridate::month(day, label = TRUE),
+          week = isoweek(day))</code></pre>
+<p>We can easily create a facet grid that plots bikes hired by month and year.</p>
+<pre><code>## Rows: 3,686
+## Columns: 5
+## $ day         &lt;dttm&gt; 2010-07-30, 2010-07-31, 2010-08-01, 2010-08-02, 2010-0...
+## $ bikes_hired &lt;dbl&gt; 6897, 5564, 4303, 6642, 7966, 7893, 8724, 9797, 6631, 7...
+## $ year        &lt;dbl&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2...
+## $ month       &lt;ord&gt; jul, jul, ago, ago, ago, ago, ago, ago, ago, ago, ago, ...
+## $ week        &lt;dbl&gt; 30, 30, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32,...</code></pre>
+<p><img src="/blogs/blog3_files/figure-html/tfl_month_year_grid-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Look at May and Jun and compare 2020 with the previous years. What’s happening?</p>
+<p>However, the challenge I want you to work on is to reproduce the following two graphs.</p>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/tfl_monthly.png" width="100%" style="display: block; margin: auto;" /><img src="/blogs/blog3_files/figure-html/tfl_absolute_monthly_change-2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>The second one looks at percentage changes from the expected level of weekly rentals. The two grey shaded rectangles correspond to the second (weeks 14-26) and fourth (weeks 40-52) quarters.</p>
+<p><img src="/blogs/blog3_files/figure-html/tfl_percent_change-1.png" width="100%" style="display: block; margin: auto;" /></p>
