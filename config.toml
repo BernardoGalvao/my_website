@@ -75,7 +75,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Excess rentals in TfL bike sharing"
       subtitle = "The impact of Covid-19 on Boris Bike."
-      image = "Ok.webp"
+      image = "Boris.jpg"
       url = "blogs/blog3"
 
     [[params.tiles.showcase]]
