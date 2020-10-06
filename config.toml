@@ -41,6 +41,10 @@ disqusShortname = ""
     subtitle = "MFA2021"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
+    
+    [[params.navigation.links]]
+    name = "Home"
+    url = "#"
 
   # Banner section
   [params.banner]
