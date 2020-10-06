@@ -110,13 +110,9 @@ Yield_Plot <- ggplot(yield_curve, aes(x=date, y=price, color = var))+
               theme_bw() +                
               labs (title = "Yields on U.S Treasury rates since 1960",
               y = "%",
+              x = "",
               caption = "Source: St.Louis Federal Reserve Economic Database(FRED)")
-
-
-
-ggsave("yield_curves_homework.jpg",plot=Yield_Plot, width = 14,height = 10, path = here::here("images"))
-#place the picture in code
-knitr::include_graphics(here::here("images","yield_curves_homework.jpg"))
+Yield_Plot
 ```
 
 ### Monthly yields on US rates by duration since 1999 on a year-by-year basis
@@ -137,10 +133,8 @@ Duration_Plot <- ggplot(Yield_After1999, aes(x=maturity, y=price, group = month,
               labs (title = "US Yield Curve",
               y = "Yield(%)",
               caption = "Source: St.Louis Federal Reserve Economic Database(FRED)")
+Duration_Plot
 
-ggsave("maturity_curves_homework.jpg",plot=Duration_Plot, width = 14,height = 10, path = here::here("images"))
-#place the picture in code
-knitr::include_graphics(here::here("images", "maturity_curves_homework.jpg"))
 ```
 
 ```{r yield_curve_3, out.width="100%"}
@@ -156,12 +150,7 @@ Month_Year_1999 <- ggplot(Yield_3M_10Y, aes(x=date, y=price, color=var,group = m
               caption = "Source: St.Louis Federal Reserve Economic Database(FRED)",
               color = "")
 
-ggsave("3M_10y_yield_curves_homework.jpg",plot=Month_Year_1999, width = 14,height = 10, path = here::here("images"))
-#place the picture in code
-knitr::include_graphics(here::here("images", "3M_10y_yield_curves_homework.jpg"))
-
-
-knitr::include_graphics(here::here("images", "yield_curve3.png"), error = FALSE)
+Month_Year_1999
 ```
 
 ```{r setup_US-recessions, warning=FALSE}
@@ -209,11 +198,6 @@ Diff_Graph <- ggplot(Yield_10Y_3M, aes(x = date,y= difference)) +
   theme(panel.border = element_blank())+
   labs(x = "", y = "Difference (10 years - 3 month) yield in %", title = "Yield Curve Inversion: 10-year minus 3 month U.S Treasury rates", subtitle = "Difference in % point, monthly averages.\n Shaded areas correspond to recessions", caption = "Source: St.Louis Federal Reserve Economic Database(FRED)")
 
-# This line saves the graph as a .jpg file
-ggsave("Diff_Graph.jpg",plot=Diff_Graph,width = 10,height = 8, path = here::here("images"))
-
-
-# # And this line includes the above mentioned picture in the HTML knited file
-knitr::include_graphics(here::here("images", "Diff_Graph.jpg"))
+Diff_Graph
 
 ```

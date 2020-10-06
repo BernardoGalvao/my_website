@@ -110,10 +110,8 @@ Yield_Plot <- ggplot(yield_curve, aes(x=date, y=price, color = var))+
               theme_bw() +                
               labs (title = "Yields on U.S Treasury rates since 1960",
               y = "%",
-              x = ""
+              x = "",
               caption = "Source: St.Louis Federal Reserve Economic Database(FRED)")
-
-
 Yield_Plot
 ```
 

@@ -133,14 +133,10 @@ yield_curve$var &lt;- factor(yield_curve$var, levels = c(&quot;3-Month Treasury 
               theme_bw() +                
               labs (title = &quot;Yields on U.S Treasury rates since 1960&quot;,
               y = &quot;%&quot;,
+              x = &quot;&quot;,
               caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
-
-
-
-ggsave(&quot;yield_curves_homework.jpg&quot;,plot=Yield_Plot, width = 14,height = 10, path = here::here(&quot;images&quot;))
-#place the picture in code
-knitr::include_graphics(here::here(&quot;images&quot;,&quot;yield_curves_homework.jpg&quot;))</code></pre>
-<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/yield_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
+Yield_Plot</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/yield_curve_1-1.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="monthly-yields-on-us-rates-by-duration-since-1999-on-a-year-by-year-basis" class="section level3">
 <h3>Monthly yields on US rates by duration since 1999 on a year-by-year basis</h3>
@@ -158,11 +154,8 @@ Duration_Plot &lt;- ggplot(Yield_After1999, aes(x=maturity, y=price, group = mon
               labs (title = &quot;US Yield Curve&quot;,
               y = &quot;Yield(%)&quot;,
               caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
-
-ggsave(&quot;maturity_curves_homework.jpg&quot;,plot=Duration_Plot, width = 14,height = 10, path = here::here(&quot;images&quot;))
-#place the picture in code
-knitr::include_graphics(here::here(&quot;images&quot;, &quot;maturity_curves_homework.jpg&quot;))</code></pre>
-<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/maturity_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
+Duration_Plot</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/yield_curve_2-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>Yield_3M_10Y &lt;- Yield_After1999 %&gt;% 
                 filter(maturity %in% c(&quot;3m&quot;, &quot;10y&quot;))
   
@@ -175,12 +168,8 @@ Month_Year_1999 &lt;- ggplot(Yield_3M_10Y, aes(x=date, y=price, color=var,group 
               caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;,
               color = &quot;&quot;)
 
-ggsave(&quot;3M_10y_yield_curves_homework.jpg&quot;,plot=Month_Year_1999, width = 14,height = 10, path = here::here(&quot;images&quot;))
-#place the picture in code
-knitr::include_graphics(here::here(&quot;images&quot;, &quot;3M_10y_yield_curves_homework.jpg&quot;))</code></pre>
-<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/3M_10y_yield_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>knitr::include_graphics(here::here(&quot;images&quot;, &quot;yield_curve3.png&quot;), error = FALSE)</code></pre>
-<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/yield_curve3.png" width="100%" style="display: block; margin: auto;" /></p>
+Month_Year_1999</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/yield_curve_3-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># get US recession dates after 1946 from Wikipedia 
 # https://en.wikipedia.org/wiki/List_of_recessions_in_the_United_States
 
@@ -238,12 +227,7 @@ Diff_Graph &lt;- ggplot(Yield_10Y_3M, aes(x = date,y= difference)) +
   theme(panel.border = element_blank())+
   labs(x = &quot;&quot;, y = &quot;Difference (10 years - 3 month) yield in %&quot;, title = &quot;Yield Curve Inversion: 10-year minus 3 month U.S Treasury rates&quot;, subtitle = &quot;Difference in % point, monthly averages.\n Shaded areas correspond to recessions&quot;, caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
 
-# This line saves the graph as a .jpg file
-ggsave(&quot;Diff_Graph.jpg&quot;,plot=Diff_Graph,width = 10,height = 8, path = here::here(&quot;images&quot;))
-
-
-# # And this line includes the above mentioned picture in the HTML knited file
-knitr::include_graphics(here::here(&quot;images&quot;, &quot;Diff_Graph.jpg&quot;))</code></pre>
-<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/Diff_Graph.jpg" width="1500" style="display: block; margin: auto;" /></p>
+Diff_Graph</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/setup_US-recessions-1.png" width="648" style="display: block; margin: auto;" /></p>
 </div>
 </div>
