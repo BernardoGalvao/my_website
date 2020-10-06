@@ -110,13 +110,14 @@ Yield_Plot <- ggplot(yield_curve, aes(x=date, y=price, color = var))+
               theme_bw() +                
               labs (title = "Yields on U.S Treasury rates since 1960",
               y = "%",
+              x = ""
               caption = "Source: St.Louis Federal Reserve Economic Database(FRED)")
 
 
-
-ggsave("yield_curves_homework.jpg",plot=Yield_Plot, width = 14,height = 10, path = here::here("images"))
+Yield_Plot
+#ggsave("yield_curves_homework.jpg",plot=Yield_Plot, width = 14,height = 10, path = here::here("images"))
 #place the picture in code
-knitr::include_graphics(here::here("images","yield_curves_homework.jpg"))
+#knitr::include_graphics(here::here("images","yield_curves_homework.jpg"))
 ```
 
 ### Monthly yields on US rates by duration since 1999 on a year-by-year basis
