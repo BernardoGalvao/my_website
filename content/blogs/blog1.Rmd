@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T21:28:43-05:00"
 description: ""
 draft: false
-image: pic10.jpg
+image: PicPega.png
 keywords: ""
 slug: blog1
 title: "What is the relation between Yield Curve and Recession at the USA"

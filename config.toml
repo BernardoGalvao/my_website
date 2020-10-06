@@ -63,7 +63,7 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Yield Curve Inversion"
       subtitle = "What is the relation between Yield Curve and Recession at the USA"
-      image = "9.jpg"
+      image = "Pic12.jpeg"
       url = "blogs/blog1"
 
     [[params.tiles.showcase]]
