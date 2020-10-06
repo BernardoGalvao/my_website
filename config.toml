@@ -37,8 +37,8 @@ disqusShortname = ""
 
   # Navigation Section
   [params.navigation]
-    title = "London Business School"
-    subtitle = "MFA2021"
+    title = "Portfolio Website"
+    subtitle = "LBS MFA2021"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
     
