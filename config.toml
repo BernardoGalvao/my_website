@@ -79,10 +79,10 @@ disqusShortname = ""
       url = "blogs/magna"
 
     [[params.tiles.showcase]]
-      title = "Ipsum"
-      subtitle = "Nisl Sed Aliquam"
+      title = "Donald Trump's Approval"
+      subtitle = "Has COVID-19 affected Trump's approval?m"
       image = "pic04.jpg"
-      url = "blogs/ipsum"
+      url = "blogs/blog4"
 
     # You can make more showcases by copy and pasting the code above
 
