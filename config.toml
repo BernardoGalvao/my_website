@@ -61,10 +61,10 @@ disqusShortname = ""
     # Display your showcases here.
     
     [[params.tiles.showcase]]
-      title = "Yield Curve inversion"
+      title = "Yield Curve Inversion"
       subtitle = "What is the relation between Yield Curve and Recession at the USA"
-      image = "pic01.jpg"
-      url = "blogs/aliquam"
+      image = "9.jpg"
+      url = "blogs/blog1"
 
     [[params.tiles.showcase]]
       title = "Tempus"
@@ -84,17 +84,6 @@ disqusShortname = ""
       image = "pic04.jpg"
       url = "blogs/ipsum"
 
-    [[params.tiles.showcase]]
-      title = "Consequat"
-      subtitle = "Ipsum Dolor Sit Amet"
-      image = "pic05.jpg"
-      url = "blogs/ipsum"
-
-    [[params.tiles.showcase]]
-      title = "Etiam"
-      subtitle = "Feugiat Amet Tempus"
-      image = "pic06.jpg"
-      url = "blogs/ipsum"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
@@ -145,7 +134,7 @@ disqusShortname = ""
 
     [[params.contact.phone]]
     title = "Phone"
-    phone = "(000) 000-0000 x1234"
+    phone = "(44) 7309-190369"
 
     [[params.contact.address]]
     title = "Address"

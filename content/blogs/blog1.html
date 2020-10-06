@@ -1,0 +1,249 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T21:28:43-05:00"
+description: ""
+draft: false
+image: pic10.jpg
+keywords: ""
+slug: blog1
+title: "What is the relation between Yield Curve and Recession at the USA"
+---
+
+
+
+<pre class="r"><code># Get a list of FRED codes for US rates and US yield curve; choose monthly frequency
+# to see, eg., the 3-month T-bill https://fred.stlouisfed.org/series/TB3MS
+tickers &lt;- c(&#39;TB3MS&#39;, # 3-month Treasury bill (or T-bill)
+             &#39;TB6MS&#39;, # 6-month
+             &#39;GS1&#39;,   # 1-year
+             &#39;GS2&#39;,   # 2-year, etc....
+             &#39;GS3&#39;,
+             &#39;GS5&#39;,
+             &#39;GS7&#39;,
+             &#39;GS10&#39;,
+             &#39;GS20&#39;,
+             &#39;GS30&#39;)  #.... all the way to the 30-year rate
+
+# Turn  FRED codes to human readable variables
+myvars &lt;- c(&#39;3-Month Treasury Bill&#39;,
+            &#39;6-Month Treasury Bill&#39;,
+            &#39;1-Year Treasury Rate&#39;,
+            &#39;2-Year Treasury Rate&#39;,
+            &#39;3-Year Treasury Rate&#39;,
+            &#39;5-Year Treasury Rate&#39;,
+            &#39;7-Year Treasury Rate&#39;,
+            &#39;10-Year Treasury Rate&#39;,
+            &#39;20-Year Treasury Rate&#39;,
+            &#39;30-Year Treasury Rate&#39;)
+
+maturity &lt;- c(&#39;3m&#39;, &#39;6m&#39;, &#39;1y&#39;, &#39;2y&#39;,&#39;3y&#39;,&#39;5y&#39;,&#39;7y&#39;,&#39;10y&#39;,&#39;20y&#39;,&#39;30y&#39;)
+
+# by default R will sort these maturities alphabetically; but since we want
+# to keep them in that exact order, we recast maturity as a factor 
+# or categorical variable, with the levels defined as we want
+maturity &lt;- factor(maturity, levels = maturity)
+
+# Create a lookup dataset
+mylookup&lt;-data.frame(symbol=tickers,var=myvars, maturity=maturity)
+# Take a look:
+mylookup %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">symbol</th>
+<th align="left">var</th>
+<th align="left">maturity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TB3MS</td>
+<td align="left">3-Month Treasury Bill</td>
+<td align="left">3m</td>
+</tr>
+<tr class="even">
+<td align="left">TB6MS</td>
+<td align="left">6-Month Treasury Bill</td>
+<td align="left">6m</td>
+</tr>
+<tr class="odd">
+<td align="left">GS1</td>
+<td align="left">1-Year Treasury Rate</td>
+<td align="left">1y</td>
+</tr>
+<tr class="even">
+<td align="left">GS2</td>
+<td align="left">2-Year Treasury Rate</td>
+<td align="left">2y</td>
+</tr>
+<tr class="odd">
+<td align="left">GS3</td>
+<td align="left">3-Year Treasury Rate</td>
+<td align="left">3y</td>
+</tr>
+<tr class="even">
+<td align="left">GS5</td>
+<td align="left">5-Year Treasury Rate</td>
+<td align="left">5y</td>
+</tr>
+<tr class="odd">
+<td align="left">GS7</td>
+<td align="left">7-Year Treasury Rate</td>
+<td align="left">7y</td>
+</tr>
+<tr class="even">
+<td align="left">GS10</td>
+<td align="left">10-Year Treasury Rate</td>
+<td align="left">10y</td>
+</tr>
+<tr class="odd">
+<td align="left">GS20</td>
+<td align="left">20-Year Treasury Rate</td>
+<td align="left">20y</td>
+</tr>
+<tr class="even">
+<td align="left">GS30</td>
+<td align="left">30-Year Treasury Rate</td>
+<td align="left">30y</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>df &lt;- tickers %&gt;% tidyquant::tq_get(get=&quot;economic.data&quot;, 
+                   from=&quot;1960-01-01&quot;)   # start from January 1960
+
+glimpse(df)</code></pre>
+<pre><code>## Rows: 6,774
+## Columns: 3
+## $ symbol &lt;chr&gt; &quot;TB3MS&quot;, &quot;TB3MS&quot;, &quot;TB3MS&quot;, &quot;TB3MS&quot;, &quot;TB3MS&quot;, &quot;TB3MS&quot;, &quot;TB3MS...
+## $ date   &lt;date&gt; 1960-01-01, 1960-02-01, 1960-03-01, 1960-04-01, 1960-05-01,...
+## $ price  &lt;dbl&gt; 4.35, 3.96, 3.31, 3.23, 3.29, 2.46, 2.30, 2.30, 2.48, 2.30, ...</code></pre>
+<pre class="r"><code>yield_curve &lt;-left_join(df,mylookup,by=&quot;symbol&quot;)
+yield_curve$var &lt;- factor(yield_curve$var, levels = c(&quot;3-Month Treasury Bill&quot;, &quot;6-Month Treasury Bill&quot;, &quot;1-Year Treasury Rate&quot;, &quot;2-Year Treasury Rate&quot;, &quot;3-Year Treasury Rate&quot;, &quot;5-Year Treasury Rate&quot;, &quot;7-Year Treasury Rate&quot;,  &quot;10-Year Treasury Rate&quot;,  &quot;20-Year Treasury Rate&quot;, &quot;30-Year Treasury Rate&quot;))</code></pre>
+<div id="plotting-the-yield-curve" class="section level2">
+<h2>Plotting the yield curve</h2>
+<p>This may seem long but it should be easy to produce the following three plots</p>
+<div id="yields-on-us-rates-by-duration-since-1960" class="section level3">
+<h3>Yields on US rates by duration since 1960</h3>
+<pre class="r"><code>Yield_Plot &lt;- ggplot(yield_curve, aes(x=date, y=price, color = var))+
+              geom_line(show.legend = FALSE)+
+              facet_wrap( ~var, ncol=2, nrow = 5)+
+              theme_bw() +                
+              labs (title = &quot;Yields on U.S Treasury rates since 1960&quot;,
+              y = &quot;%&quot;,
+              caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
+
+
+
+ggsave(&quot;yield_curves_homework.jpg&quot;,plot=Yield_Plot, width = 14,height = 10, path = here::here(&quot;images&quot;))
+#place the picture in code
+knitr::include_graphics(here::here(&quot;images&quot;,&quot;yield_curves_homework.jpg&quot;))</code></pre>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/yield_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="monthly-yields-on-us-rates-by-duration-since-1999-on-a-year-by-year-basis" class="section level3">
+<h3>Monthly yields on US rates by duration since 1999 on a year-by-year basis</h3>
+<pre class="r"><code>yield_curve$year &lt;- format(as.Date(yield_curve$date, format=&quot;%Y/%m/%d&quot;),&quot;%Y&quot;)
+yield_curve$month &lt;- format(as.Date(yield_curve$date, format=&quot;%Y/%m/%d&quot;),&quot;%m&quot;)
+yield_curve$month &lt;- as.numeric(yield_curve$month)
+
+Yield_After1999 &lt;- yield_curve %&gt;% 
+                filter(year &gt;= &quot;1999&quot;)
+
+Duration_Plot &lt;- ggplot(Yield_After1999, aes(x=maturity, y=price, group = month, color=year))+
+              geom_line(show.legend = FALSE)+
+              facet_wrap( ~year, ncol=4, nrow = 6)+
+              theme_bw() +                
+              labs (title = &quot;US Yield Curve&quot;,
+              y = &quot;Yield(%)&quot;,
+              caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
+
+ggsave(&quot;maturity_curves_homework.jpg&quot;,plot=Duration_Plot, width = 14,height = 10, path = here::here(&quot;images&quot;))
+#place the picture in code
+knitr::include_graphics(here::here(&quot;images&quot;, &quot;maturity_curves_homework.jpg&quot;))</code></pre>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/maturity_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Yield_3M_10Y &lt;- Yield_After1999 %&gt;% 
+                filter(maturity %in% c(&quot;3m&quot;, &quot;10y&quot;))
+  
+Month_Year_1999 &lt;- ggplot(Yield_3M_10Y, aes(x=date, y=price, color=var,group = maturity))+
+              geom_line()+
+              theme_bw() + 
+              labs (title = &quot;Yields on 3-month and 10-year US Treasury rates since 1999&quot;,
+              x = &quot;&quot;,      
+              y = &quot;%&quot;,
+              caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;,
+              color = &quot;&quot;)
+
+ggsave(&quot;3M_10y_yield_curves_homework.jpg&quot;,plot=Month_Year_1999, width = 14,height = 10, path = here::here(&quot;images&quot;))
+#place the picture in code
+knitr::include_graphics(here::here(&quot;images&quot;, &quot;3M_10y_yield_curves_homework.jpg&quot;))</code></pre>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/3M_10y_yield_curves_homework.jpg" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;images&quot;, &quot;yield_curve3.png&quot;), error = FALSE)</code></pre>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/yield_curve3.png" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># get US recession dates after 1946 from Wikipedia 
+# https://en.wikipedia.org/wiki/List_of_recessions_in_the_United_States
+
+recessions &lt;- tibble(
+  from = c(&quot;1948-11-01&quot;, &quot;1953-07-01&quot;, &quot;1957-08-01&quot;, &quot;1960-04-01&quot;, &quot;1969-12-01&quot;, &quot;1973-11-01&quot;, &quot;1980-01-01&quot;,&quot;1981-07-01&quot;, &quot;1990-07-01&quot;, &quot;2001-03-01&quot;, &quot;2007-12-01&quot;),  
+  to = c(&quot;1949-10-01&quot;, &quot;1954-05-01&quot;, &quot;1958-04-01&quot;, &quot;1961-02-01&quot;, &quot;1970-11-01&quot;, &quot;1975-03-01&quot;, &quot;1980-07-01&quot;, &quot;1982-11-01&quot;, &quot;1991-03-01&quot;, &quot;2001-11-01&quot;, &quot;2009-06-01&quot;) 
+  )  %&gt;% 
+  mutate(From = ymd(from), 
+         To=ymd(to),
+         duration_days = To-From)
+
+recessions</code></pre>
+<pre><code>## # A tibble: 11 x 5
+##    from       to         From       To         duration_days
+##    &lt;chr&gt;      &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;drtn&gt;       
+##  1 1948-11-01 1949-10-01 1948-11-01 1949-10-01 334 days     
+##  2 1953-07-01 1954-05-01 1953-07-01 1954-05-01 304 days     
+##  3 1957-08-01 1958-04-01 1957-08-01 1958-04-01 243 days     
+##  4 1960-04-01 1961-02-01 1960-04-01 1961-02-01 306 days     
+##  5 1969-12-01 1970-11-01 1969-12-01 1970-11-01 335 days     
+##  6 1973-11-01 1975-03-01 1973-11-01 1975-03-01 485 days     
+##  7 1980-01-01 1980-07-01 1980-01-01 1980-07-01 182 days     
+##  8 1981-07-01 1982-11-01 1981-07-01 1982-11-01 488 days     
+##  9 1990-07-01 1991-03-01 1990-07-01 1991-03-01 243 days     
+## 10 2001-03-01 2001-11-01 2001-03-01 2001-11-01 245 days     
+## 11 2007-12-01 2009-06-01 2007-12-01 2009-06-01 548 days</code></pre>
+<pre class="r"><code>yield_curve$maturity = NULL
+yield_curve$symbol = NULL
+yield_curve$day = NULL
+Yield_10Y_3M &lt;- yield_curve %&gt;% 
+                filter(var %in% c(&quot;3-Month Treasury Bill&quot;, &quot;10-Year Treasury Rate&quot;)) %&gt;% 
+                pivot_wider(names_from = var,values_from = price)
+
+colnames(Yield_10Y_3M) &lt;- c(&quot;date&quot;, &quot;year&quot;, &quot;month&quot;, &quot;TBill_3M&quot;, &quot;TNote_10y&quot;)
+
+Yield_10Y_3M &lt;- Yield_10Y_3M %&gt;% 
+                mutate(difference = TNote_10y - TBill_3M) %&gt;% 
+                mutate(change = if_else(difference&gt;=0, &quot;Above&quot;, &quot;Below&quot;)) %&gt;%
+                mutate(rug_colour = if_else(change==&quot;Below&quot;,&quot;#DEAFB1&quot;,&quot;#BEEBC2&quot;))
+
+#After treating the data, we plot the graph, divided by year 
+Diff_Graph &lt;- ggplot(Yield_10Y_3M, aes(x = date,y= difference)) +
+  geom_line()+
+   #No we fill the area between the two plots by using geom_ribbon
+  geom_ribbon(aes(ymin = 0, ymax = pmin(0,difference), fill = &quot;Above&quot;)) + 
+  geom_ribbon(aes(ymin = difference, ymax = pmin(0,difference), fill = &quot;Below&quot;))+
+  geom_rug(color=Yield_10Y_3M$rug_colour,sides=&quot;b&quot;)+
+  scale_fill_manual(values = c(&quot;#DEAFB1&quot;,&quot;#BEEBC2&quot;,&quot;grey&quot;,&quot;white&quot;))+
+  theme_bw()+
+  #scale_x_continuous(breaks=seq(13, 53, 13))+
+  #scale_y_continuous(labels = scales::percent_format(accuracy = 1)) + 
+  #In these three lines we change and customize the theme used
+  theme(axis.ticks = element_blank())+
+  theme(legend.position = &quot;none&quot;) + 
+  theme(panel.border = element_blank())+
+  labs(x = &quot;&quot;, y = &quot;Difference (10 years - 3 month) yield in %&quot;, title = &quot;Yield Curve Inversion: 10-year minus 3 month U.S Treasury rates&quot;, subtitle = &quot;Difference in % point, monthly averages.\n Shaded areas correspond to recessions&quot;, caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
+
+# This line saves the graph as a .jpg file
+ggsave(&quot;Diff_Graph.jpg&quot;,plot=Diff_Graph,width = 10,height = 8, path = here::here(&quot;images&quot;))
+
+
+# # And this line includes the above mentioned picture in the HTML knited file
+knitr::include_graphics(here::here(&quot;images&quot;, &quot;Diff_Graph.jpg&quot;))</code></pre>
+<p><img src="C:/Users/berna/OneDrive/Documentos/R/my_website/images/Diff_Graph.jpg" width="1500" style="display: block; margin: auto;" /></p>
+</div>
+</div>
