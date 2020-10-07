@@ -173,30 +173,16 @@ Month_Year_1999</code></pre>
 <pre class="r"><code># get US recession dates after 1946 from Wikipedia 
 # https://en.wikipedia.org/wiki/List_of_recessions_in_the_United_States
 
+#1. Setup data for US recessions 
 recessions &lt;- tibble(
-  from = c(&quot;1948-11-01&quot;, &quot;1953-07-01&quot;, &quot;1957-08-01&quot;, &quot;1960-04-01&quot;, &quot;1969-12-01&quot;, &quot;1973-11-01&quot;, &quot;1980-01-01&quot;,&quot;1981-07-01&quot;, &quot;1990-07-01&quot;, &quot;2001-03-01&quot;, &quot;2007-12-01&quot;),  
-  to = c(&quot;1949-10-01&quot;, &quot;1954-05-01&quot;, &quot;1958-04-01&quot;, &quot;1961-02-01&quot;, &quot;1970-11-01&quot;, &quot;1975-03-01&quot;, &quot;1980-07-01&quot;, &quot;1982-11-01&quot;, &quot;1991-03-01&quot;, &quot;2001-11-01&quot;, &quot;2009-06-01&quot;) 
+  from = c(&quot;1960-04-01&quot;, &quot;1969-12-01&quot;, &quot;1973-11-01&quot;, &quot;1980-01-01&quot;,&quot;1981-07-01&quot;, &quot;1990-07-01&quot;, &quot;2001-03-01&quot;, &quot;2007-12-01&quot;),  
+  to = c(&quot;1961-02-01&quot;, &quot;1970-11-01&quot;, &quot;1975-03-01&quot;, &quot;1980-07-01&quot;, &quot;1982-11-01&quot;, &quot;1991-03-01&quot;, &quot;2001-11-01&quot;, &quot;2009-06-01&quot;) 
   )  %&gt;% 
   mutate(From = ymd(from), 
          To=ymd(to),
          duration_days = To-From)
 
-recessions</code></pre>
-<pre><code>## # A tibble: 11 x 5
-##    from       to         From       To         duration_days
-##    &lt;chr&gt;      &lt;chr&gt;      &lt;date&gt;     &lt;date&gt;     &lt;drtn&gt;       
-##  1 1948-11-01 1949-10-01 1948-11-01 1949-10-01 334 days     
-##  2 1953-07-01 1954-05-01 1953-07-01 1954-05-01 304 days     
-##  3 1957-08-01 1958-04-01 1957-08-01 1958-04-01 243 days     
-##  4 1960-04-01 1961-02-01 1960-04-01 1961-02-01 306 days     
-##  5 1969-12-01 1970-11-01 1969-12-01 1970-11-01 335 days     
-##  6 1973-11-01 1975-03-01 1973-11-01 1975-03-01 485 days     
-##  7 1980-01-01 1980-07-01 1980-01-01 1980-07-01 182 days     
-##  8 1981-07-01 1982-11-01 1981-07-01 1982-11-01 488 days     
-##  9 1990-07-01 1991-03-01 1990-07-01 1991-03-01 243 days     
-## 10 2001-03-01 2001-11-01 2001-03-01 2001-11-01 245 days     
-## 11 2007-12-01 2009-06-01 2007-12-01 2009-06-01 548 days</code></pre>
-<pre class="r"><code>yield_curve$maturity = NULL
+yield_curve$maturity = NULL
 yield_curve$symbol = NULL
 yield_curve$day = NULL
 Yield_10Y_3M &lt;- yield_curve %&gt;% 
@@ -208,26 +194,26 @@ colnames(Yield_10Y_3M) &lt;- c(&quot;date&quot;, &quot;year&quot;, &quot;month&q
 Yield_10Y_3M &lt;- Yield_10Y_3M %&gt;% 
                 mutate(difference = TNote_10y - TBill_3M) %&gt;% 
                 mutate(change = if_else(difference&gt;=0, &quot;Above&quot;, &quot;Below&quot;)) %&gt;%
-                mutate(rug_colour = if_else(change==&quot;Below&quot;,&quot;#DEAFB1&quot;,&quot;#BEEBC2&quot;))
+                mutate(Colour = if_else(change==&quot;Below&quot;,&quot;#e67e7e&quot;,&quot;#a0badb&quot;))
 
 #After treating the data, we plot the graph, divided by year 
 Diff_Graph &lt;- ggplot(Yield_10Y_3M, aes(x = date,y= difference)) +
   geom_line()+
-   #No we fill the area between the two plots by using geom_ribbon
+  #3. Plot the spread between 30 years and 3 months as a blue/red ribbon, based on whether the spread is positive (blue) or negative(red)
   geom_ribbon(aes(ymin = 0, ymax = pmin(0,difference), fill = &quot;Above&quot;)) + 
   geom_ribbon(aes(ymin = difference, ymax = pmin(0,difference), fill = &quot;Below&quot;))+
-  geom_rug(color=Yield_10Y_3M$rug_colour,sides=&quot;b&quot;)+
-  scale_fill_manual(values = c(&quot;#DEAFB1&quot;,&quot;#BEEBC2&quot;,&quot;grey&quot;,&quot;white&quot;))+
+  geom_rug(color=Yield_10Y_3M$Colour,sides=&quot;b&quot;)+
+  scale_fill_manual(values = c(&quot;#e67e7e&quot;,&quot;#a0badb&quot;,&quot;grey&quot;,&quot;white&quot;))+
   theme_bw()+
-  #scale_x_continuous(breaks=seq(13, 53, 13))+
-  #scale_y_continuous(labels = scales::percent_format(accuracy = 1)) + 
-  #In these three lines we change and customize the theme used
   theme(axis.ticks = element_blank())+
   theme(legend.position = &quot;none&quot;) + 
   theme(panel.border = element_blank())+
-  labs(x = &quot;&quot;, y = &quot;Difference (10 years - 3 month) yield in %&quot;, title = &quot;Yield Curve Inversion: 10-year minus 3 month U.S Treasury rates&quot;, subtitle = &quot;Difference in % point, monthly averages.\n Shaded areas correspond to recessions&quot;, caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)
-
+  labs(x = &quot;&quot;, y = &quot;Difference (10 years - 3 month) yield in %&quot;, title = &quot;Yield Curve Inversion: 10-year minus 3 month U.S Treasury rates&quot;, subtitle = &quot;Difference in % point, monthly averages.\n Shaded areas correspond to recessions&quot;, caption = &quot;Source: St.Louis Federal Reserve Economic Database(FRED)&quot;)+
+  geom_hline(yintercept=0)+
+  #2. Superimpose recessions as the grey areas in our plot
+  geom_rect(data=recessions, inherit.aes=F, aes(xmin=From, xmax=To, ymin=-Inf, ymax=+Inf), fill=&#39;darkgray&#39;, alpha=0.5) 
 Diff_Graph</code></pre>
 <p><img src="/blogs/blog1_files/figure-html/setup_US-recessions-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>```</p>
 </div>
 </div>

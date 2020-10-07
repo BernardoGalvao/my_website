@@ -198,8 +198,8 @@ Diff_Graph <- ggplot(Yield_10Y_3M, aes(x = date,y= difference)) +
   geom_hline(yintercept=0)+
   #2. Superimpose recessions as the grey areas in our plot
   geom_rect(data=recessions, inherit.aes=F, aes(xmin=From, xmax=To, ymin=-Inf, ymax=+Inf), fill='darkgray', alpha=0.5) 
-
 Diff_Graph
+
 ```
 
 
