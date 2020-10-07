@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R Projects&#34;&#34; on Portfolio website for Bernardo Galvão</title>
+    <title>R Projects on Portfolio website for Bernardo Galvão</title>
     <link>/blogs/</link>
-    <description>Recent content in R Projects&#34;&#34; on Portfolio website for Bernardo Galvão</description>
+    <description>Recent content in R Projects on Portfolio website for Bernardo Galvão</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 31 Oct 2017 22:27:21 -0500</lastBuildDate><atom:link href="/blogs/index.xml" rel="self" type="application/rss+xml" />
