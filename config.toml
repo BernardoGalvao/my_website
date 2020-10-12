@@ -98,12 +98,10 @@ disqusShortname = ""
     enable = true
     title = "About Me!"
     subtitle = """My name is Bernardo Galvão and I was born in a city called Nova Friburgo in the countryside of the State of Rio de Janeiro.
-    I graduated in Production Engineering at Universidade Federal Fluminense and my final thesis was an application of the Modern Portfolio Theory on the Brazilian Market of pension funds with the addition of IVVB11, a Brazilian ETF with exposure to S&P500, to analyze the diversification’s impact.
+    I graduated in Production Engineering at Universidade Federal Fluminense and my final thesis was an application of the modern portfolio theory on the Brazilian Market of pension funds with the addition of IVVB11, a Brazilian ETF with exposure to S&P500, to analyze the diversification’s impact.
     Over the past few years, I have worked in different companies and roles. I worked at L'Oréal Brazil, then I became Summer Intern at Banco Safra, one of the biggest Investment Banks in Brazil.
-    My most recent work was as Offshore Investment Intern at Turim MFO, brazilian biggest independet Multi-Family Office.
-    I won the 1st Turim national award organized by Turim MFO: Crack an economic case by creating an Inflation Index for UHNW. I was awarded 9 meetings with Asset management in London.
-    I decided took the CFA level 1 in December of 2019 and I took GMAT and IELTS in February of 2020 and September of 2019, respectively.
-    My goal is to achieve a very important role in the **Investment Banking industry**.If you would like to know more about me you can check my LinkedIn at the bottom of the site."""
+    My most recent work was as Offshore Investment Intern at Turim MFO, brazilian biggest independet Multi-Family Office. I won the 1st Turim national award organized by Turim MFO. I cracked an economic case by creating an Inflation Index for UHNW. I was awarded 9 meetings with Asset management in London.
+    I took the CFA level 1 in December of 2019. My goal is to achieve a very important role in the Investment Banking industry. If you would like to know more about me you can check my LinkedIn at the bottom of the site."""
     buttonText = "Get Started"
     url = "blogs"
 
